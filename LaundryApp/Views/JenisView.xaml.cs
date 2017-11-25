@@ -10,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LaundryApp.Viewmodels;
 
-namespace LoundryApp
+namespace LaundryApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for JenisView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class JenisView : Window
     {
-        public MainWindow()
+        private JenisViewModel viewmodel;
+
+        public JenisView()
         {
             InitializeComponent();
+            this.viewmodel = new Viewmodels.JenisViewModel() { WindowClose=this.Close};
+            this.DataContext = viewmodel;
         }
     }
 }

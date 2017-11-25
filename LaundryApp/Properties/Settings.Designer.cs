@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LoundryApp.Properties
+namespace LaundryApp.Properties
 {
 
 

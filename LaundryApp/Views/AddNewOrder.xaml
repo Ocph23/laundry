@@ -1,0 +1,79 @@
+﻿<Window x:Class="LaundryApp.Views.AddNewOrder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LaundryApp.Views"
+        xmlns:ico="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+      Title="" Height="695.667" Width="957.667" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#FF1E2C3A">
+
+    <Grid Style="{DynamicResource GridTitle}" >
+        <Grid.Background>
+            <ImageBrush ImageSource="/LoundryApp;component/Images/background-kifra-site.png"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="73"/>
+            <RowDefinition/>
+            <RowDefinition Height="87"/>
+        </Grid.RowDefinitions>
+        <Border Margin="5" BorderThickness="0,0,0,2" BorderBrush="#FFE4DFDA" Opacity="0.5">
+            <WrapPanel  Orientation="Horizontal">
+                <Label Content="Transaksi Baru" Style="{DynamicResource TitleStyle}"  ></Label>
+            </WrapPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65*"/>
+                <RowDefinition Height="463*"/>
+            </Grid.RowDefinitions>
+            <WrapPanel Grid.Row="0" Margin="10">
+                <Label Style="{StaticResource labelInput}" Content="Pelanggan" Width="92"/>
+                <ComboBox Height="35" Width="303" FontSize="15"
+                  IsEditable="True" DisplayMemberPath="Nama"
+                  ItemsSource="{Binding PelangganView}"
+                  SelectedItem="{Binding Pelanggan}"
+                          SelectedValuePath="PelangganId"
+                          SelectedValue="{Binding PelangganId}"
+                  Text="{Binding NewItem, UpdateSourceTrigger=LostFocus}" Background="{x:Null}" Foreground="#FF959591" BorderBrush="{x:Null}" Style="{DynamicResource ComboBoxStyle1}"/>
+            </WrapPanel>
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Items}"  AutoGenerateColumns="False" ColumnHeaderHeight="50" Foreground="White" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowBackground="Transparent"  SelectedItem="{Binding ItemSelected}" Margin="5" Grid.Column="0" RowHeight="45" Background="{x:Null}" FontSize="16" >
+                <DataGrid.Columns>
+                    <DataGridComboBoxColumn Header="Kode"  
+                        SelectedItemBinding="{Binding Jenis}"                                            
+                        SelectedValueBinding="{Binding JenisId}"
+                        SelectedValuePath="JenisId"
+                        DisplayMemberPath="Kode"
+                        >
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Jenises}"/>
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="IsEditable" Value="True"/>
+                                <Setter Property="ItemsSource" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.Jenises}"/>
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
+
+                    </DataGridComboBoxColumn>
+
+                    <DataGridTextColumn  IsReadOnly="true" Width="*" Header="Jenis" Binding="{Binding Jenis.Nama,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn  Width="*" Header="Jumlah" Binding="{Binding Jumlah,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn  Width="*" Header="Berat" Binding="{Binding Berat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn  Width="*" Header="Biaya" Binding="{Binding Biaya,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right">
+            <Button Style="{StaticResource ButtonAction}" Command="{Binding SaveCommand}" Content="Simpan"/>
+            <Button Style="{StaticResource ButtonAction}" Command="{Binding CancelCommand}" Content="Batal"/>
+        </WrapPanel>
+
+
+    </Grid>
+</Window>

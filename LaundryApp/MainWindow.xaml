@@ -1,0 +1,272 @@
+﻿<Window x:Class="LaundryApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LaundryApp"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" WindowState="Maximized" WindowStyle="None" Background="#FF1E2C3A">
+    <Window.Resources>
+        <Style x:Key="labelView" TargetType="StackPanel">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                
+                <DataTrigger Binding="{Binding ElementName=inputStack,Path=Visibility}" Value="Visible">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Style="{DynamicResource GridTitle}" >
+        <Grid.Background>
+            <ImageBrush ImageSource="Images/background-kifra-site.png"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="73"/>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Border Margin="5" BorderThickness="0,0,0,2" BorderBrush="#FFE4DFDA" Opacity="0.5">
+            <WrapPanel  Orientation="Horizontal">
+                <Label Content="Transaksi" Style="{DynamicResource TitleStyle}"  ></Label>
+            </WrapPanel>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="30*"/>
+            </Grid.ColumnDefinitions>
+            <WrapPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="5">
+                <Button Width="auto" Command="{Binding AddNewOrderCommand}" fa:Awesome.Content="PlusCircle"  BorderBrush="{x:Null}"  TextElement.FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome" FontSize="35" Background="{x:Null}" Foreground="#FF95E5FF" />
+            </WrapPanel>
+            <DataGrid Grid.Row="1" ColumnHeaderHeight="50" Foreground="White" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" AutoGenerateColumns="False" RowBackground="Transparent" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding  TransaksiView}" SelectedItem="{Binding Selected}" Margin="5" Grid.Column="0" RowHeight="45" Background="{x:Null}" FontSize="16" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Kode" Binding="{Binding Kode}"/>
+                    <DataGridTextColumn Width="*" Header="Pelanggan" Binding="{Binding Pelanggan.Nama}"/>
+                    <DataGridTextColumn Width="*" Header="Tanggal" Binding="{Binding TanggalMasuk}"/>
+                    <DataGridTextColumn Width="*" Header="Tanggal Bisa Ambil" Binding="{Binding TanggalPengambilan}"/>
+                    <DataGridTextColumn Width="*" Header="Pengerjaan" Binding="{Binding StatusPengerjaan}"/>
+                    <DataGridTextColumn Width="*" Header="Pembayaran" Binding="{Binding StatusPembayaran}">
+                        <DataGridTextColumn.CellStyle>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=btnBayar, Path=Visibility}" Value="{x:Static local:StatusPembayaran.Belum}">
+                                        <Setter Property="Button.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Width="*" Header="Pengambilan" Binding="{Binding StatusPengambilan}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TabControl SelectedItem="{Binding TabSelected}" Padding="10" Grid.Column="1" Grid.Row="1" Margin="5" BorderBrush="#FFF0EBEB" FontSize="14" Foreground="White" Background="{x:Null}" >
+             
+                <TabItem Name="ordersInfo"  Margin="0" VerticalAlignment="Top"  BorderBrush="{x:Null}" Style="{DynamicResource TabItemStyle1}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Item"/>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                    <Grid>
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding ItemsView}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ColumnHeaderHeight="50" Foreground="White" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowBackground="Transparent"   Margin="5" Grid.Column="0" RowHeight="45" Background="{x:Null}" FontSize="16" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn  IsReadOnly="true" Width="*" Header="Kode" Binding="{Binding Jenis.Kode,UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn  IsReadOnly="true" Width="*" Header="Jenis" Binding="{Binding Jenis.Nama,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn IsReadOnly="true" Width="*" Header="Jumlah" Binding="{Binding Jumlah,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn IsReadOnly="true" Width="*" Header="Berat" Binding="{Binding Berat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn IsReadOnly="true" Width="*" Header="Biaya" Binding="{Binding Biaya,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Name="biayaInfo" Margin="0" VerticalAlignment="Top"  BorderBrush="{x:Null}" Style="{DynamicResource TabItemStyle1}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Biaya"/>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                   
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40*"/>
+                            <ColumnDefinition Width="60*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <Label Style="{StaticResource labelInput}" Content="Biaya"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="Discount"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="Grand Total"></Label>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.Total}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.Discount}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.GrandTotal}"></Label>
+                        </StackPanel>
+                        <Button HorizontalAlignment="Left" Command="{Binding BayarCommand}" Visibility="{Binding Selected.ButtonVisiblity}" x:Name="btnBayar" Grid.Row="1" Style="{StaticResource ButtonAction}" Content="Bayar">
+                            
+                        </Button>
+                    </Grid>
+                </TabItem>
+                <TabItem Name="customerInfo" Margin="0" VerticalAlignment="Top"   BorderBrush="{x:Null}" Style="{DynamicResource TabItemStyle1}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Pelanggan"/>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40*"/>
+                            <ColumnDefinition Width="60*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <Label Style="{StaticResource labelInput}" Content="Nama"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="No KTP"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="Jenis Kelamin"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="Alamat"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="Telepon"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="Tanggal Daftar"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="Aktif"></Label>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Nama}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.NoKTP}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.JenisKelamin}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Alamat}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.telepon}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Tanggal}"></Label>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Aktif}"></Label>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Name="pengerjaanInfo" Margin="0" VerticalAlignment="Top"  BorderBrush="{x:Null}" Style="{DynamicResource TabItemStyle1}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Pengerjaan"/>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="100" FontSize="25" Style="{StaticResource labelInput}" Content="{Binding Selected.StatusPengerjaan}"></Label>
+                        <Button HorizontalAlignment="Left" Command="{Binding PengerjaanCommand}" Visibility="{Binding Selected.PengerjaanVisiblity}" Grid.Row="1" Style="{StaticResource ButtonAction}" Content="Ubah"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Name="pengembalianInfo" Margin="0" VerticalAlignment="Top"  BorderBrush="{x:Null}" Style="{DynamicResource TabItemStyle1}">
+                    <TabItem.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Pengambilan"/>
+                        </DataTemplate>
+                    </TabItem.HeaderTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40*"/>
+                            <ColumnDefinition Width="60*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+
+                      
+                        <StackPanel Grid.Column="0" Style="{StaticResource labelView}">
+                            <Label Style="{StaticResource labelInput }" Content="Nama"/>
+                            <Label Style="{StaticResource labelInput}" Content="No KTP"/>
+                            <Label Style="{StaticResource labelInput}" Content="Tanggal Pengambilan"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Style="{StaticResource labelView}">
+                            <Label Style="{StaticResource labelInput }" Content="{Binding Pengembalian.Nama}"/>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Pengembalian.NoKTP}"/>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pengembalian.TanggalPengambilan}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="0" Name="inputStack" Visibility="{Binding InputPengambilanVisiblity}">
+                            <Label Style="{StaticResource labelInput }" Content="Ambil Sendiri"/>
+                            <Label Style="{StaticResource labelInput }" Content="Nama"/>
+                            <Label Style="{StaticResource labelInput}" Content="No KTP"/>
+                            <Label Style="{StaticResource labelInput}" Content="Tanggal Pengambilan"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Visibility="{Binding InputPengambilanVisiblity}">
+                            <CheckBox Height="35" Margin="5" IsChecked="{Binding Selected.AmbilSendiri}" VerticalContentAlignment="Center" FontSize="15" Foreground="White" Name="ambilSendiri"/>
+                            <TextBox Text="{Binding Selected.Pengembalian.Nama}" Style="{StaticResource textBoxInput}" />
+                            <TextBox Style="{StaticResource  textBoxInput}" Text="{Binding Selected.Pengembalian.NoKTP}"/>
+                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pengembalian.TanggalPengambilan}"/>
+
+                        </StackPanel>
+                        <Button Grid.Row="1" HorizontalAlignment="Left" Command="{Binding PengembalianCommand}" Visibility="{Binding InputPengambilanVisiblity}"  Style="{StaticResource ButtonAction}" Content="Simpan"/>
+
+                      
+                         </Grid>
+                </TabItem>
+
+            </TabControl>
+         
+        </Grid>
+        <Grid Grid.Row="2" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="5" BorderBrush="#FFB8B0B0" BorderThickness="0,1,0,0"></Border>
+            <Button Name="customer" Click="customer_Click" Width="auto" fa:Awesome.Content="AddressCard"  BorderBrush="{x:Null}"  TextElement.FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome" Grid.Column="0" FontSize="45" Background="{x:Null}" Foreground="#FF95E5FF" />
+            <Button Name="jenis" Click="jenis_Click" Width="auto" fa:Awesome.Content="ListUl"  BorderBrush="{x:Null}"  TextElement.FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome" Grid.Column="1" FontSize="45" Background="{x:Null}" Foreground="#FF95E5FF" />
+            <Button Name="setting" Click="setting_Click" Width="auto" fa:Awesome.Content="Cogs"  BorderBrush="{x:Null}"  TextElement.FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome" Grid.Column="2" FontSize="45" Background="{x:Null}" Foreground="#FF95E5FF" />
+            <Button Name="user" Width="auto" fa:Awesome.Content="UserPlus"  BorderBrush="{x:Null}"  TextElement.FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome" Grid.Column="3" FontSize="45" Background="{x:Null}" Foreground="#FF95E5FF">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="Click">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                            </BooleanAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                        </Style.Triggers>
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Name="addUser" Command="{Binding AddNewUserCommand}" Header="Tambah User" ></MenuItem>
+                                    <MenuItem  Name="changePassword" Command="{Binding ChangePasswordCommand}"  Header="Ubah Password"/>
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Width="auto" Click="Button_Click_1" fa:Awesome.Content="WindowCloseOutline"  BorderBrush="{x:Null}"  TextElement.FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome" Grid.Column="4" FontSize="45" Background="{x:Null}" Foreground="#FF95E5FF" />
+
+
+        </Grid>
+
+
+
+
+
+
+    </Grid>
+</Window>
