@@ -61,7 +61,7 @@ namespace LaundryApp.Viewmodels
             }
         }
 
-      
+      //OK
         public transaksi Selected
         {
             get { return _selected; }
