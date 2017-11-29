@@ -54,20 +54,6 @@ using System.Threading.Tasks;using DAL;
             }
         }
 
-        [DbColumn("Berat")]
-        public double Berat
-        {
-            get { return _berat; }
-            set
-            {
-                _berat = value;
-                if (Jenis != null && value > 0)
-                {
-                    Biaya = Jenis.Tarif * value;
-                }
-                OnPropertyChange("Berat");
-            }
-        }
 
         public virtual jenis Jenis
         {
@@ -75,9 +61,9 @@ using System.Threading.Tasks;using DAL;
             set
             {
                 _jenis = value;
-                if(value!=null && Berat>0)
+                if(value!=null && Jumlah>0)
                 {
-                    Biaya = value.Tarif * Berat;
+                    Biaya = value.Tarif * Jumlah;
                 }
                 OnPropertyChange("Jenis");
             }
@@ -92,13 +78,15 @@ using System.Threading.Tasks;using DAL;
             set { _biaya = value; OnPropertyChange("Biaya"); }
         }
 
+        public string NamaJenis { get; set; }
+        public double Tarif { get; set; }
+
 
         private jenis _jenis;
         private int _itemtransaksiid;
         private int _transaksiid;
         private int _jenisid;
         private int _jumlah;
-        private double _berat;
     
 
         

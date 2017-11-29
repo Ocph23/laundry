@@ -60,7 +60,7 @@ namespace LaundryApp
 
         private void customer_Click(object sender, RoutedEventArgs e)
         {
-            var form = new Views.CustomerView();
+            var form = new Reports.Forms.Summary();
             form.ShowDialog();
         }
 

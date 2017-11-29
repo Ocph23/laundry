@@ -21,10 +21,8 @@ namespace LaundryApp
             this.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
-        public IRepository<Models.pelanggan> Pelanggans { get { return new Repository<Models.pelanggan>(this); } }
         public IRepository<Models.itemtransaksi> ItemsTransaksi { get { return new Repository<Models.itemtransaksi>(this); } }
         public IRepository<Models.jenis> Jenises { get { return new Repository<Models.jenis>(this); } }
-        public IRepository<Models.pengembalian> Pengembalians{ get { return new Repository<Models.pengembalian>(this); } }
         public IRepository<Models.setting> Settings { get { return new Repository<Models.setting>(this); } }
         public IRepository<Models.transaksi> Transaksis { get { return new Repository<Models.transaksi>(this); } }
         public IRepository<Models.user> Users { get { return new Repository<Models.user>(this); } }

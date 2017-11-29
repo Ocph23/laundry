@@ -108,21 +108,10 @@ namespace LaundryApp.Models
             set
             {
                 _statuspengambilan = value;
-                if (value == StatusPengambilan.Belum)
-                    InputPengambilanVisiblity = Visibility.Visible;
-                else
-                   InputPengambilanVisiblity = Visibility.Collapsed;
                 OnPropertyChange("StatusPengambilan");
             }
         }
 
-        private pelanggan pelanggan;
-
-        public pelanggan Pelanggan
-        {
-            get { return pelanggan; }
-            set { pelanggan = value; OnPropertyChange("Pelanggan"); }
-        }
 
         private setting setting;
 
@@ -146,6 +135,13 @@ namespace LaundryApp.Models
             }
         }
 
+        private string _nomorKamar;
+        [DbColumn("NomorKamar")]
+        public string NomorKamar
+        {
+            get { return _nomorKamar; }
+            set { _nomorKamar = value; OnPropertyChange("NomorKamar"); }
+        }
 
         private DateTime tanggalPengambilan;
 
@@ -175,18 +171,6 @@ namespace LaundryApp.Models
         }
 
 
-        public Visibility InputPengambilanVisiblity
-        {
-            get {
-              
-                return _inputPengambilanVisiblity; }
-            set
-            {
-                _inputPengambilanVisiblity = value;
-                OnPropertyChange("InputPengambilanVisiblity");
-            }
-        }
-
 
 
         private Visibility _PengerjaanVisiblity;
@@ -207,30 +191,9 @@ namespace LaundryApp.Models
             }
         }
 
-        private bool _ambilSendiri;
-
-        public bool AmbilSendiri
-        {
-            get { return _ambilSendiri; }
-            set { _ambilSendiri = value;
-                if(Pelanggan!=null && Pengembalian!=null)
-                {
-                    Pengembalian.Nama = Pelanggan.Nama;
-                    Pengembalian.NoKTP = Pelanggan.NoKTP;
-                    Pengembalian.TanggalPengambilan = DateTime.Now;
-                }
-
-                OnPropertyChange("AmbilSendiri"); }
-        }
-
 
         public ObservableCollection<Models.itemtransaksi> Items { get; set; }
-        public pengembalian Pengembalian { get {
-                return _pengembalian;
-            }  set {
-                _pengembalian = value;
-                OnPropertyChange("Pengembalian");
-            } }
+      
 
         private int _transaksiid;
         private string _kode;
@@ -243,7 +206,6 @@ namespace LaundryApp.Models
         private StatusPengambilan _statuspengambilan;
         private Biaya _biaya;
         private Visibility _inputPengambilanVisiblity;
-        private pengembalian _pengembalian;
     }
 
 }

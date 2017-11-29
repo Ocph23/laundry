@@ -10,7 +10,6 @@ namespace LaundryApp.Viewmodels
     {
         public ObservableCollection<Models.jenis> Jenises { get; set; }
         public Action WindowClose { get; set; }
-        public ObservableCollection<pelanggan> PelangganView { get; private set; }
         public CommandHandler SaveCommand { get; set; }
         public CommandHandler CancelCommand { get; set; }
         public AddNewOrderViewModel()
@@ -23,7 +22,6 @@ namespace LaundryApp.Viewmodels
             {
                 Jenises = new ObservableCollection<Models.jenis>(db.Jenises.Select());
                 this.Setting = db.Settings.Where(O => O.Aktif == true).FirstOrDefault();
-                this.PelangganView = new ObservableCollection<pelanggan>(db.Pelanggans.Select());
             }
         }
 
@@ -32,7 +30,7 @@ namespace LaundryApp.Viewmodels
         private bool SaveValidation(object obj)
         {
             var isValid = true;
-            if (this.Items.Count <= 0 || this.Pelanggan == null || this.Setting==null )
+            if (this.Items.Count <= 0 || this.Setting==null )
                 isValid = false;
 
             return isValid;

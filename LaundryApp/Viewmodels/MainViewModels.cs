@@ -36,32 +36,11 @@ namespace LaundryApp.Viewmodels
                if(value.Name=="biayaInfo" && Selected!=null)
                 {
                     GetBiaya(Selected);
-                }else if(value.Name=="pengembalianInfo" && Selected!=null)
-                {
-                    if (Selected.StatusPengambilan == StatusPengambilan.Sudah)
-                        Selected.InputPengambilanVisiblity = Visibility.Collapsed;
-                    if(Selected.Pengembalian==null)
-                    {
-                        Selected.Pengembalian = new Models.pengembalian { TransaksiId=Selected.TransaksiId, TanggalPengambilan = DateTime.Now };
-                    }
                 }
                 OnPropertyChange("TabSelected");
             }
         }
-
-        private void GetPelanggan(transaksi selected)
-        {
-           if(Selected.Pelanggan==null)
-            {
-
-                using (var db = new OcphDbContext())
-                {
-                    Selected.Pelanggan = db.Pelanggans.Where(O => O.PelangganId == selected.PelangganId).FirstOrDefault();
-                }
-            }
-        }
-
-      //OK
+        
         public transaksi Selected
         {
             get { return _selected; }
@@ -121,9 +100,7 @@ namespace LaundryApp.Viewmodels
         }
         private void BayarAction(object obj)
         {
-            var form = new Views.BayarView();
-            var viewmodel = new Viewmodels.BayarViewModel(Selected) { WindowClose = form.Close };
-            form.DataContext = viewmodel;
+            var form = new Reports.Forms.Bill(Selected.TransaksiId);
             form.ShowDialog();
         }
 
@@ -150,7 +127,7 @@ namespace LaundryApp.Viewmodels
                 {
                     var items = from a in db.ItemsTransaksi.Where(O=>O.TransaksiId==selected.TransaksiId)
                                 join b in db.Jenises.Select() on a.JenisId equals b.JenisId
-                                select new itemtransaksi { Berat = a.Berat, Biaya = a.Berat * b.Tarif, ItemTransaksiId = a.ItemTransaksiId, Jenis = b, Jumlah = a.Jumlah, JenisId = a.JenisId, TransaksiId = a.TransaksiId };
+                                select new itemtransaksi { Biaya = a.Jumlah* b.Tarif, ItemTransaksiId = a.ItemTransaksiId, Jenis = b, Jumlah = a.Jumlah, JenisId = a.JenisId, TransaksiId = a.TransaksiId };
                     selected.Items = new ObservableCollection<itemtransaksi>(items);
                     ItemsData.Clear();
                     foreach (var item in items)
@@ -227,12 +204,10 @@ namespace LaundryApp.Viewmodels
                 var trans = db.Connection.BeginTransaction();
                 try
                 {
-                    Selected.Pengembalian.PengembalianId = db.Pengembalians.InsertAndGetLastID(Selected.Pengembalian);
                     var updated = db.Transaksis.Update(O => new { O.StatusPengambilan }, new transaksi { StatusPengambilan = StatusPengambilan.Sudah }, O => O.TransaksiId == Selected.TransaksiId);
-                    if (Selected.Pengembalian.PengembalianId > 0 && updated)
+                    if (updated)
                     {
                         Selected.StatusPengambilan = StatusPengambilan.Sudah;
-                        Selected.InputPengambilanVisiblity = Visibility.Collapsed;
                         MessageBox.Show("Data Tersimpan","Info", MessageBoxButton.OK, MessageBoxImage.Information);
                         trans.Commit();
 
@@ -250,7 +225,7 @@ namespace LaundryApp.Viewmodels
 
         private bool PengembalianValidation(object obj)
         {
-            if (Selected!=null&& Selected.Pengembalian != null && !string.IsNullOrEmpty(Selected.Pengembalian.Nama) && !string.IsNullOrEmpty(Selected.Pengembalian.NoKTP))
+            if (Selected!=null&& Selected.StatusPengambilan== StatusPengambilan.Belum)
                 return true;
             else
                 return false;

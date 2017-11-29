@@ -13,12 +13,10 @@ namespace LaundryApp.Models
             using (var db = new OcphDbContext())
             {
                 var data = from a in db.Transaksis.Select()
-                           join b in db.Pelanggans.Select() on a.PelangganId equals b.PelangganId
                            join c in db.Settings.Select() on a.SettingId equals c.SettingId
                            select new transaksi
                            {
-                               Kode = a.Kode,
-                               Pelanggan = b,
+                               Kode = a.Kode,  NomorKamar=a.NomorKamar,
                                PelangganId = a.PelangganId,
                                SettingId = a.SettingId,
                                StatusPembayaran = a.StatusPembayaran,

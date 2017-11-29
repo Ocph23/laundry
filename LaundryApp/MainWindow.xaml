@@ -48,7 +48,7 @@
             <DataGrid Grid.Row="1" ColumnHeaderHeight="50" Foreground="White" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" AutoGenerateColumns="False" RowBackground="Transparent" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding  TransaksiView}" SelectedItem="{Binding Selected}" Margin="5" Grid.Column="0" RowHeight="45" Background="{x:Null}" FontSize="16" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="*" Header="Kode" Binding="{Binding Kode}"/>
-                    <DataGridTextColumn Width="*" Header="Pelanggan" Binding="{Binding Pelanggan.Nama}"/>
+                    <DataGridTextColumn Width="*" Header="No. Kamar" Binding="{Binding NomorKamar}"/>
                     <DataGridTextColumn Width="*" Header="Tanggal" Binding="{Binding TanggalMasuk}"/>
                     <DataGridTextColumn Width="*" Header="Tanggal Bisa Ambil" Binding="{Binding TanggalPengambilan}"/>
                     <DataGridTextColumn Width="*" Header="Pengerjaan" Binding="{Binding StatusPengerjaan}"/>
@@ -80,7 +80,6 @@
                                 <DataGridTextColumn  IsReadOnly="true" Width="*" Header="Kode" Binding="{Binding Jenis.Kode,UpdateSourceTrigger=PropertyChanged}" />
                                 <DataGridTextColumn  IsReadOnly="true" Width="*" Header="Jenis" Binding="{Binding Jenis.Nama,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 <DataGridTextColumn IsReadOnly="true" Width="*" Header="Jumlah" Binding="{Binding Jumlah,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn IsReadOnly="true" Width="*" Header="Berat" Binding="{Binding Berat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                 <DataGridTextColumn IsReadOnly="true" Width="*" Header="Biaya" Binding="{Binding Biaya,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             </DataGrid.Columns>
                         </DataGrid>
@@ -114,41 +113,9 @@
                             <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.Discount}"></Label>
                             <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.GrandTotal}"></Label>
                         </StackPanel>
-                        <Button HorizontalAlignment="Left" Command="{Binding BayarCommand}" Visibility="{Binding Selected.ButtonVisiblity}" x:Name="btnBayar" Grid.Row="1" Style="{StaticResource ButtonAction}" Content="Bayar">
+                        <Button HorizontalAlignment="Left" Command="{Binding BayarCommand}" Visibility="{Binding Selected.ButtonVisiblity}" x:Name="btnBayar" Grid.Row="1" Style="{StaticResource ButtonAction}" Content="Cetak Kwitansi">
                             
                         </Button>
-                    </Grid>
-                </TabItem>
-                <TabItem Name="customerInfo" Margin="0" VerticalAlignment="Top"   BorderBrush="{x:Null}" Style="{DynamicResource TabItemStyle1}">
-                    <TabItem.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="Pelanggan"/>
-                        </DataTemplate>
-                    </TabItem.HeaderTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40*"/>
-                            <ColumnDefinition Width="60*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <Label Style="{StaticResource labelInput}" Content="Nama"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="No KTP"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="Jenis Kelamin"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="Alamat"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="Telepon"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="Tanggal Daftar"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="Aktif"></Label>
-
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Nama}"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.NoKTP}"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.JenisKelamin}"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Alamat}"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.telepon}"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Tanggal}"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pelanggan.Aktif}"></Label>
-                        </StackPanel>
                     </Grid>
                 </TabItem>
                 <TabItem Name="pengerjaanInfo" Margin="0" VerticalAlignment="Top"  BorderBrush="{x:Null}" Style="{DynamicResource TabItemStyle1}">
@@ -175,42 +142,8 @@
                         </DataTemplate>
                     </TabItem.HeaderTemplate>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40*"/>
-                            <ColumnDefinition Width="60*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="100"/>
-                        </Grid.RowDefinitions>
-
-                      
-                        <StackPanel Grid.Column="0" Style="{StaticResource labelView}">
-                            <Label Style="{StaticResource labelInput }" Content="Nama"/>
-                            <Label Style="{StaticResource labelInput}" Content="No KTP"/>
-                            <Label Style="{StaticResource labelInput}" Content="Tanggal Pengambilan"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Style="{StaticResource labelView}">
-                            <Label Style="{StaticResource labelInput }" Content="{Binding Pengembalian.Nama}"/>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Pengembalian.NoKTP}"/>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pengembalian.TanggalPengambilan}"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="0" Name="inputStack" Visibility="{Binding InputPengambilanVisiblity}">
-                            <Label Style="{StaticResource labelInput }" Content="Ambil Sendiri"/>
-                            <Label Style="{StaticResource labelInput }" Content="Nama"/>
-                            <Label Style="{StaticResource labelInput}" Content="No KTP"/>
-                            <Label Style="{StaticResource labelInput}" Content="Tanggal Pengambilan"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Visibility="{Binding InputPengambilanVisiblity}">
-                            <CheckBox Height="35" Margin="5" IsChecked="{Binding Selected.AmbilSendiri}" VerticalContentAlignment="Center" FontSize="15" Foreground="White" Name="ambilSendiri"/>
-                            <TextBox Text="{Binding Selected.Pengembalian.Nama}" Style="{StaticResource textBoxInput}" />
-                            <TextBox Style="{StaticResource  textBoxInput}" Text="{Binding Selected.Pengembalian.NoKTP}"/>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Pengembalian.TanggalPengambilan}"/>
-
-                        </StackPanel>
-                        <Button Grid.Row="1" HorizontalAlignment="Left" Command="{Binding PengembalianCommand}" Visibility="{Binding InputPengambilanVisiblity}"  Style="{StaticResource ButtonAction}" Content="Simpan"/>
+                       
+                        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding PengembalianCommand}" Visibility="{Binding InputPengambilanVisiblity}"  Style="{StaticResource ButtonAction}" Content="Simpan"/>
 
                       
                          </Grid>
@@ -259,8 +192,6 @@
                 </Button.Style>
             </Button>
             <Button Width="auto" Click="Button_Click_1" fa:Awesome.Content="WindowCloseOutline"  BorderBrush="{x:Null}"  TextElement.FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome" Grid.Column="4" FontSize="45" Background="{x:Null}" Foreground="#FF95E5FF" />
-
-
         </Grid>
 
 
