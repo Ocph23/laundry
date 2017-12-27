@@ -35,6 +35,7 @@ namespace LaundryApp.Reports.Forms
         {
             using (var db = new OcphDbContext())
             {
+
                 var parent = (from a in db.Transaksis.Where(O => O.TanggalMasuk.Day==now.Day && O.TanggalMasuk.Month==now.Month && O.TanggalMasuk.Year==now.Year)
                               join b in db.Settings.Select() on a.SettingId equals b.SettingId
                               join c in db.Users.Select() on a.UserId equals c.UserId
@@ -88,6 +89,11 @@ namespace LaundryApp.Reports.Forms
         {
             DatePicker dp = (DatePicker)sender;
             this.Refreshreport(dp.SelectedDate.Value);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

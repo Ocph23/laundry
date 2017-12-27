@@ -26,18 +26,12 @@
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="65*"/>
-                <RowDefinition Height="463*"/>
+                <RowDefinition Height="37*"/>
+                <RowDefinition Height="227*"/>
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="0" Margin="10">
-                <Label Style="{StaticResource labelInput}" Content="Pelanggan" Width="92"/>
-                <ComboBox Height="35" Width="303" FontSize="15"
-                  IsEditable="True" DisplayMemberPath="Nama"
-                  ItemsSource="{Binding PelangganView}"
-                  SelectedItem="{Binding Pelanggan}"
-                          SelectedValuePath="PelangganId"
-                          SelectedValue="{Binding PelangganId}"
-                  Text="{Binding NewItem, UpdateSourceTrigger=LostFocus}" Background="{x:Null}" Foreground="#FF959591" BorderBrush="{x:Null}" Style="{DynamicResource ComboBoxStyle1}"/>
+                <Label Style="{StaticResource labelInput}" Content="Nomor Kamar" Width="125"/>
+                <TextBox Height="35" Width="303" FontSize="15"  Text="{Binding NomorKamar, UpdateSourceTrigger=LostFocus}" Background="{x:Null}" Foreground="#FF959591" BorderBrush="#FFF9F9F9" Style="{DynamicResource textBoxInput}"/>
             </WrapPanel>
             <DataGrid Grid.Row="1" ItemsSource="{Binding Items}"  AutoGenerateColumns="False" ColumnHeaderHeight="50" Foreground="White" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowBackground="Transparent"  SelectedItem="{Binding ItemSelected}" Margin="5" Grid.Column="0" RowHeight="45" Background="{x:Null}" FontSize="16" >
                 <DataGrid.Columns>
@@ -45,7 +39,7 @@
                         SelectedItemBinding="{Binding Jenis}"                                            
                         SelectedValueBinding="{Binding JenisId}"
                         SelectedValuePath="JenisId"
-                        DisplayMemberPath="Kode"
+                        DisplayMemberPath="Kode" Width="150"
                         >
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="ComboBox">
@@ -63,7 +57,6 @@
 
                     <DataGridTextColumn  IsReadOnly="true" Width="*" Header="Jenis" Binding="{Binding Jenis.Nama,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn  Width="*" Header="Jumlah" Binding="{Binding Jumlah,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <DataGridTextColumn  Width="*" Header="Berat" Binding="{Binding Berat,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DataGridTextColumn  Width="*" Header="Biaya" Binding="{Binding Biaya,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                 </DataGrid.Columns>

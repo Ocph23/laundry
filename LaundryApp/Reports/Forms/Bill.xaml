@@ -30,8 +30,7 @@
             </WindowsFormsHost>
         </Grid>
         <WrapPanel Grid.Row="2" HorizontalAlignment="Right">
-            <Button Style="{StaticResource ButtonAction}" Command="{Binding SaveCommand}" Content="Simpan"/>
-            <Button Style="{StaticResource ButtonAction}" Command="{Binding CancelCommand}" Content="Batal"/>
+            <Button Style="{StaticResource ButtonAction}" Click="Button_Click" Content="Keluar"/>
         </WrapPanel>
 
 

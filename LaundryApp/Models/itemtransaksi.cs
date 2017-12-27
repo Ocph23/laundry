@@ -50,6 +50,10 @@ using System.Threading.Tasks;using DAL;
             set
             {
                 _jumlah = value;
+                if (Jenis != null && value> 0)
+                {
+                    Biaya = Jenis.Tarif * Jumlah;
+                }
                 OnPropertyChange("Jumlah");
             }
         }

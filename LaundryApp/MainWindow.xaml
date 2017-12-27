@@ -110,7 +110,10 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1">
                             <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.Total}"></Label>
-                            <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.Discount}"></Label>
+                            <WrapPanel>
+                                <Label Style="{StaticResource labelInput}" Width="Auto" Content="{Binding Selected.Biaya.Discount}"></Label>
+                                <Label Style="{StaticResource labelInput}" Width="auto" Content="%"></Label>
+                            </WrapPanel>
                             <Label Style="{StaticResource labelInput}" Content="{Binding Selected.Biaya.GrandTotal}"></Label>
                         </StackPanel>
                         <Button HorizontalAlignment="Left" Command="{Binding BayarCommand}" Visibility="{Binding Selected.ButtonVisiblity}" x:Name="btnBayar" Grid.Row="1" Style="{StaticResource ButtonAction}" Content="Cetak Kwitansi">
@@ -143,7 +146,7 @@
                     </TabItem.HeaderTemplate>
                     <Grid>
                        
-                        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding PengembalianCommand}" Visibility="{Binding InputPengambilanVisiblity}"  Style="{StaticResource ButtonAction}" Content="Simpan"/>
+                        <Button VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding PengembalianCommand}" Visibility="{Binding InputPengambilanVisiblity}"  Style="{StaticResource ButtonAction}" Content="Diambil"/>
 
                       
                          </Grid>

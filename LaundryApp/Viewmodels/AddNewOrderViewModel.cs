@@ -25,12 +25,10 @@ namespace LaundryApp.Viewmodels
             }
         }
 
-       
-
         private bool SaveValidation(object obj)
         {
             var isValid = true;
-            if (this.Items.Count <= 0 || this.Setting==null )
+            if (this.Items.Count <= 0 || this.Setting==null  || string.IsNullOrEmpty(NomorKamar))
                 isValid = false;
 
             return isValid;
@@ -67,6 +65,7 @@ namespace LaundryApp.Viewmodels
                         trans.Commit();
                         IsSaved = true;
                         MessageBox.Show("Data Tersimpan !", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                        WindowClose();
 
                     }
                 }
@@ -81,7 +80,7 @@ namespace LaundryApp.Viewmodels
 
         public bool IsSaved { get; internal set; }
 
-
+        
         
 
 

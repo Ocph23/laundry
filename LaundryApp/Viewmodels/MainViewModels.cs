@@ -48,6 +48,7 @@ namespace LaundryApp.Viewmodels
             {
                 _selected = value;
                 GetOrders(value);
+                GetBiaya(Selected);
                 OnPropertyChange("Selected");
             }
         }
@@ -106,8 +107,9 @@ namespace LaundryApp.Viewmodels
 
         private void AddNewOrderAction(object obj)
         {
-            var viewmodel = new Viewmodels.AddNewOrderViewModel();
+           
             var form = new Views.AddNewOrder();
+            var viewmodel = new Viewmodels.AddNewOrderViewModel() {WindowClose=form.Close };
             form.DataContext = viewmodel;
             form.ShowDialog();
             if (viewmodel.IsSaved)
@@ -159,7 +161,7 @@ namespace LaundryApp.Viewmodels
                     {
                         selected.Biaya.Total = selected.Items.Sum(O => O.Biaya);
                         selected.Biaya.Discount = selected.Setting.Discount;
-                        selected.Biaya.GrandTotal = selected.Biaya.Total - (selected.Biaya.Total * selected.Biaya.Discount);
+                        selected.Biaya.GrandTotal = selected.Biaya.Total - (selected.Biaya.Total * selected.Biaya.Discount/100);
 
                     }
                 }

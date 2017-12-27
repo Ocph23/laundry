@@ -17,7 +17,6 @@ namespace LaundryApp.Models
                            select new transaksi
                            {
                                Kode = a.Kode,  NomorKamar=a.NomorKamar,
-                               PelangganId = a.PelangganId,
                                SettingId = a.SettingId,
                                StatusPembayaran = a.StatusPembayaran,
                                StatusPengambilan = a.StatusPengambilan,

@@ -20,8 +20,6 @@ namespace LaundryApp
     /// </summary>
     public partial class MainWindow : Window
     {
-      
-
         public MainWindow()
         {
             var vm = new Viewmodels.LoginViewModel();
@@ -30,18 +28,12 @@ namespace LaundryApp
             if(vm.UserLogin!=null)
             {
                 InitializeComponent();
-                this.DataContext = new Viewmodels.MainViewModels();
+                this.DataContext = new Viewmodels.MainViewModels() {};
             }else
             {
                 this.Close();
             }
-
-
-           
-          
         }
-
-       
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

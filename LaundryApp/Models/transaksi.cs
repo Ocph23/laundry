@@ -57,16 +57,7 @@ namespace LaundryApp.Models
             }
         }
 
-        [DbColumn("PelangganId")]
-        public int PelangganId
-        {
-            get { return _pelangganid; }
-            set
-            {
-                _pelangganid = value;
-                OnPropertyChange("PelangganId");
-            }
-        }
+       
 
         [DbColumn("UserId")]
         public int UserId
